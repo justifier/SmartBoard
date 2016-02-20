@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/borders"
+    tools:context="forthyearproject.smartboard.Login">
+
+    <ImageView
+        android:id="@+id/smartBoardicon"
+        android:layout_width="300dp"
+        android:layout_height="233dp"
+        android:layout_marginTop="50dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/smartboardloginicon"
+        android:contentDescription="@string/smartboardIcon"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/smartBoardicon"
+        android:id="@+id/editText"
+        android:hint="@string/nameHint"
+        android:focusable="true"
+        android:textColor="#ffffff"
+        android:textColorHighlight="#0276a5"
+        android:textColorHint="#00a7e4"
+        android:layout_marginTop="46dp" />
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/editText2"
+        android:layout_below="@id/editText"
+        android:textColorHint="#00a7e4"
+        android:hint="@string/passHint" />
+
+    <CheckBox
+        android:id="@+id/staySignedIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/stayLoggedIn"
+        android:checked="true"
+        android:layout_below="@+id/editText2"
+        android:layout_alignStart="@id/editText2"
+        />
+
+    <Button
+        android:id="@+id/LoginButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@id/editText2"
+        android:layout_marginRight="10dp"
+        android:layout_below="@+id/editText2"
+        android:text="@string/login"
+        android:textColor="#FFFFFF"
+        android:background="#004e6d"/>
+
+</RelativeLayout>
