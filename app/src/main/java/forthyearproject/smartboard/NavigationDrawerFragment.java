@@ -1,5 +1,6 @@
 package forthyearproject.smartboard;
 
+import android.content.Context;
 import android.support.v7.app.ActionBarActivity;
 import android.app.Activity;
 import android.support.v7.app.ActionBar;
@@ -57,6 +58,8 @@ public class NavigationDrawerFragment extends Fragment {
     private int mCurrentSelectedPosition = 0;
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
+    private String[] moduleSplit;
+    private String[] moduletitles;
 
     public NavigationDrawerFragment() {
     }
@@ -97,17 +100,25 @@ public class NavigationDrawerFragment extends Fragment {
                 selectItem(position);
             }
         });
+        SharedPreferences prefs = this.getActivity().getSharedPreferences("SMARTBOARD_STORAGE", Context.MODE_PRIVATE);
+        String modules = prefs.getString("Init","unavailable");
+        if(!modules.isEmpty())
+        {
+            moduleSplit = modules.split("%%%");
+            moduletitles = moduleSplit;
+        }
+        for(int i = 0; i < moduletitles.length; i++){
+            if(moduleSplit[i].contains("%%"))
+                //there are 7 characters that are used for sorting but not needed now, that is why 7 is here.
+                moduletitles[i] = moduleSplit[i].substring(7,moduleSplit[i].indexOf("%%",7));
+            else
+                moduletitles[i] = moduleSplit[i].substring(7);
+        }
         mDrawerListView.setAdapter(new ArrayAdapter<String>(
                 getActionBar().getThemedContext(),
                 android.R.layout.simple_list_item_activated_1,
                 android.R.id.text1,
-                new String[]{
-                        getString(R.string.module1),
-                        getString(R.string.module2),
-                        getString(R.string.module3),
-                        getString(R.string.module4),
-                        getString(R.string.module5),
-                }));
+                moduletitles));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;
     }
@@ -237,7 +248,6 @@ public class NavigationDrawerFragment extends Fragment {
         // showGlobalContextActionBar, which controls the top-left area of the action bar.
         if (mDrawerLayout != null && isDrawerOpen()) {
             inflater.inflate(R.menu.global, menu);
-            showGlobalContextActionBar();
         }
         super.onCreateOptionsMenu(menu, inflater);
     }
@@ -256,16 +266,7 @@ public class NavigationDrawerFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * Per the navigation drawer design guidelines, updates the action bar to show the global app
-     * 'context', rather than just what's in the current screen.
-     */
-    private void showGlobalContextActionBar() {
-        ActionBar actionBar = getActionBar();
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-        actionBar.setTitle(R.string.app_name);
-    }
+
 
     private ActionBar getActionBar() {
         return ((ActionBarActivity) getActivity()).getSupportActionBar();

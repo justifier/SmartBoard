@@ -19,10 +19,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/smartBoardicon"
-        android:id="@+id/editText"
+        android:inputType="textPersonName"
+        android:id="@+id/username"
         android:hint="@string/nameHint"
         android:focusable="true"
-        android:textColor="#ffffff"
+        android:textColor="#000000"
         android:textColorHighlight="#0276a5"
         android:textColorHint="#00a7e4"
         android:layout_marginTop="46dp" />
@@ -32,9 +33,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
+        android:textColor="#000000"
         android:ems="10"
-        android:id="@+id/editText2"
-        android:layout_below="@id/editText"
+        android:id="@+id/userpass"
+        android:layout_below="@id/username"
         android:textColorHint="#00a7e4"
         android:hint="@string/passHint" />
 
@@ -44,19 +46,30 @@
         android:layout_height="wrap_content"
         android:text="@string/stayLoggedIn"
         android:checked="true"
-        android:layout_below="@+id/editText2"
-        android:layout_alignStart="@id/editText2"
+        android:layout_below="@+id/userpass"
+        android:layout_alignStart="@id/userpass"
         />
 
     <Button
         android:id="@+id/LoginButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@id/editText2"
+        android:layout_alignEnd="@id/userpass"
         android:layout_marginRight="10dp"
-        android:layout_below="@+id/editText2"
+        android:layout_below="@+id/userpass"
         android:text="@string/login"
         android:textColor="#FFFFFF"
         android:background="#004e6d"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/createAccount"
+        android:id="@+id/createAccount"
+        android:textSize="14sp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginStart="6dp" />
 
 </RelativeLayout>

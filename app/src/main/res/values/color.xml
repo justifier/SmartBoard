@@ -2,4 +2,5 @@
 <resources>
     <color name="actionbar_background_color">#004e6d</color>
     <color name="selected_drawer_color">#7000a7e4</color>
+    <color name="transparent_video">#0000</color>
 </resources>

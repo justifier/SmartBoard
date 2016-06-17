@@ -4,6 +4,14 @@
     android:layout_height="55dip"
     android:orientation="vertical" >
 
+    <VideoView
+        android:layout_gravity="center_horizontal"
+        android:visibility="gone"
+        android:background="#0000"
+        android:id="@+id/lblVideoItem"
+        android:layout_width="match_parent"
+        android:layout_height="250dp" />
+
     <TextView
         android:id="@+id/lblListItem"
         android:layout_width="fill_parent"

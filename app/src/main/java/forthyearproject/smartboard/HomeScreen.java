@@ -1,6 +1,7 @@
 package forthyearproject.smartboard;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -18,6 +19,7 @@ import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class HomeScreen extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -31,6 +33,7 @@ public class HomeScreen extends ActionBarActivity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
+    private String[] moduleSplit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +41,21 @@ public class HomeScreen extends ActionBarActivity
         setContentView(R.layout.activity_home_screen);
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
-
-        //TODO fix this shit
-        mTitle = "Compilers";
+        SharedPreferences prefs = getSharedPreferences("SMARTBOARD_STORAGE",MODE_PRIVATE);
+        String username = prefs.getString("User", "unavailable");
+        String password = prefs.getString("Password","unavailable");
+        String type = prefs.getString("UserType","unavailable");
+        String modules = prefs.getString("Init","unavailable");
+        if(!modules.isEmpty())
+        {
+            moduleSplit = modules.split("%%%");
+            if(moduleSplit[0].contains("%%"))
+                mTitle = moduleSplit[0].substring(7, moduleSplit[0].indexOf("%%",7));
+            else
+                mTitle = "Unavailable";
+        }
+        else
+            mTitle = "Unavailable";
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.actionbar_background_color)));
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
@@ -49,32 +64,33 @@ public class HomeScreen extends ActionBarActivity
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        restoreActionBar();
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
+        onSectionAttached(position);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.container, ModuleFragment.newInstance("Information on getting content from restful service", "more info if needed"))
-                .commit();
+                        .replace(R.id.container, ModuleFragment.newInstance(moduleSplit[position], (moduleSplit[position].split("%%").length-1)))
+                        .commit();
+
     }
 
     public void onSectionAttached(int number) {
-        switch (number) {
-            case 1:
-                mTitle = getString(R.string.module1);
-                break;
-            case 2:
-                mTitle = getString(R.string.module2);
-                break;
-            case 3:
-                mTitle = getString(R.string.module3);
-                break;
-            case 4:
-                mTitle = getString(R.string.module4);
-                break;
-            case 5:
-                mTitle = getString(R.string.module5);
-                break;
+        SharedPreferences prefs = getSharedPreferences("SMARTBOARD_STORAGE",MODE_PRIVATE);
+        String modules = prefs.getString("Init","unavailable");
+        if(!modules.isEmpty())
+        {
+            moduleSplit = modules.split("%%%");
         }
+        if(moduleSplit[number].contains("%%"))
+            mTitle = moduleSplit[number].substring(7, moduleSplit[number].indexOf("%%",7));
+        else
+            mTitle = "unavailable";
     }
 
     public void restoreActionBar() {
